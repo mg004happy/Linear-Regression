@@ -1,0 +1,83 @@
+## 📄 Code Explanation
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+```
+- Import libraries for numerical computation and plotting.
+
+```python
+np.random.seed(42)
+num_samples = 100
+x_train = 2 * np.random.rand(num_samples, 1)
+```
+- Generate 100 random `x` values between 0 and 2.
+
+```python
+true_slope = 3
+true_intercept = 4
+noise = np.random.randn(num_samples, 1)
+y_train = true_intercept + true_slope * x_train + noise
+```
+- Create `y_train` using the true linear relationship `y = 4 + 3x + noise`.
+
+```python
+plt.figure(figsize=(8, 5))
+plt.scatter(x_train, y_train, color="blue", label="Training data", alpha=0.7)
+plt.title("Dummy Linear Regression Data")
+plt.xlabel("x_train")
+plt.ylabel("y_train")
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+- Plot the raw data to visualize the linear relationship.
+
+```python
+print("Features shape is:", x_train.shape)
+print("Target shape is:", y_train.shape)
+```
+- Display the dimensions of input and output.
+
+```python
+steps = 500
+m = 40
+w = 0
+b = 0
+alpha = 0.7
+```
+- Initialize training settings: number of iterations, batch size, weight, bias, and learning rate.
+
+```python
+for i in range(steps):
+    y_pred = w * x_train + b
+    sum_w = 0
+    sum_b = 0
+    for i in range(m):
+        sum_w +=  (w * x_train[i] + b - y_train[i]) * x_train[i]
+        sum_b += (w * x_train[i] + b - y_train[i])
+    w = w - (alpha/m) * sum_w
+    b = b - (alpha/m) * sum_b
+```
+- Perform gradient descent for `steps` iterations:
+  - Predict values
+  - Compute gradients from first `m` samples
+  - Update weight `w` and bias `b`
+
+```python
+print(w)
+print(b)
+```
+- Output the learned values of slope and intercept.
+
+```python
+plt.figure(figsize=(8, 5))
+plt.scatter(x_train, y_train, color="blue", label="Training data", alpha=0.7)
+plt.plot(x_train, w * x_train + b, color = "red", label = "Line")
+plt.xlabel("x_train")
+plt.ylabel("y_train")
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+- Visualize the learned regression line along with the training data.
